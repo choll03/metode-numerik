@@ -1,6 +1,7 @@
 
 <?php
 
+$belakang_koma = 3;
 $a = "";
 $b = "";
 $h = "";
@@ -56,7 +57,10 @@ MathJax = {
         <td align="center" style="border-bottom: 1px solid black" width="20%">`x`</td>
         <td align="center" style="border-bottom: 1px solid black" colspan="2">`f(x)`</td>
     </tr>
-    <?php for($i = 0; $i <= $n; $i++) { ?>
+    <?php 
+    $n += 1;
+    
+    for($i = 0; $i < $n; $i++) { ?>
 
     <?php 
     
@@ -69,10 +73,10 @@ MathJax = {
     $input = $_POST['fungsi'];
     $label_input = substr($input, 0, 1) == 'e' ? 'e^' .$x : str_replace('$x', $x, $input);
 
-    $f = eval('return round(('. $input .'), 5);');
+    $f = eval('return round(('. $input .'),'.$belakang_koma .');');
     $arr_f[] = $f;
 
-    if($i != 0 && $i != $n) {
+    if($i != 0 && $i != ($n - 1)) {
         $sigma_f += $f;
 
         if($i % 2 == 0) {
@@ -104,11 +108,14 @@ MathJax = {
 <p>&#224; `=<?php echo $h . '/2 ( ' . $arr_f[0] . '+ 2(' . $sigma_f . ') +' . $arr_f[count($arr_f) - 1] .' )';?>`</p>
 <p>&#224; `=<?php echo ($h/2) * ($arr_f[0] + (2*$sigma_f) + $arr_f[count($arr_f) - 1]);?>`</p>
 <h2>Metode Simson `1/3`</h2>
-<p>&#224; `=<?php echo $h . '/3 ( ' . $arr_f[0] . '+ 4(' . $sigma_f_genap . ') + 2(' .$sigma_f_ganjil.') +' . $arr_f[count($arr_f) - 1] .' )'?>`</p>
-<p>&#224; `=<?php echo round(($h/3), 5) * ($arr_f[0] + (4*$sigma_f_genap) + (2* $sigma_f_ganjil) + $arr_f[count($arr_f) - 1]);?>`</p>
+<p>&#224; `=<?php echo $h . '/3 ( ' . $arr_f[0] . '+ 4(' . $sigma_f_ganjil . ') + 2(' .$sigma_f_genap.') +' . $arr_f[count($arr_f) - 1] .' )'?>`</p>
+<p>&#224; `=<?php echo round(($h/3), $belakang_koma) . ' ( ' . $arr_f[0] . '+ ' . 4*$sigma_f_ganjil . ' + ' . 2*$sigma_f_genap .' +' . $arr_f[count($arr_f) - 1] .' )'?>`</p>
+<p>&#224; `=<?php echo round(($h/3), $belakang_koma) . ' ( ' .($arr_f[0] + (4*$sigma_f_ganjil) + (2* $sigma_f_genap) + $arr_f[count($arr_f) - 1]). ' )'?>`</p>
+<p>&#224; `=<?php echo round(($h/3), $belakang_koma) * ($arr_f[0] + (4*$sigma_f_ganjil) + (2* $sigma_f_genap) + $arr_f[count($arr_f) - 1]);?>`</p>
 <h2>Metode Simson `3/8`</h2>
 <p>&#224; `=(<?php echo '3('. $h . '))/8 ( ' . $arr_f[0] . '+ 3(' . $sigma_f_38_genap . ') + 2(' .$sigma_f_38_ganjil.') +' . $arr_f[count($arr_f) - 1] .' )'?>`</p>
-<p>&#224; `=<?php echo round((3*$h/8), 5) * ($arr_f[0] + (3*$sigma_f_38_genap) + (2* $sigma_f_38_ganjil) + $arr_f[count($arr_f) - 1]);?>`</p>
+<p>&#224; `=<?php echo  (3*$h)/8 . ' ( ' . $arr_f[0] . '+ (' . 3*$sigma_f_38_genap . ') + (' . 2*$sigma_f_38_ganjil.') +' . $arr_f[count($arr_f) - 1] .' )'?>`</p>
+<p>&#224; `=<?php echo round((3*$h/8), $belakang_koma) * ($arr_f[0] + (3*$sigma_f_38_genap) + (2* $sigma_f_38_ganjil) + $arr_f[count($arr_f) - 1]);?>`</p>
 <h2>`\int_0^1 x^2 \,dx=`</h2>
 <?php } ?>
 </body>
